@@ -1,5 +1,6 @@
 import QtQuick 6.10
 import "../services" as QsServices
+import "." as Components
 
 Item {
     id: root
@@ -40,7 +41,7 @@ Item {
             ? root.highlightOpacity
             : 0
 
-    Elevation {
+    Components.Elevation {
         level: root.highlighted ? root.elevation + 2 : root.hovered ? root.elevation + 1 : root.elevation
         target: surface
         radius: surface.radius

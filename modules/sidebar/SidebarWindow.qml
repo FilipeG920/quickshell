@@ -5,7 +5,7 @@ import Quickshell
 import Quickshell.Wayland
 import "../../config" as QsConfig
 import "../../services" as QsServices
-import "../../components"
+import "../../components" as ExtraComponents
 
 PanelWindow {
     id: root
@@ -90,7 +90,7 @@ PanelWindow {
             NumberAnimation { duration: 240; easing.bezierCurve: [0.05, 0.7, 0.1, 1.0] }
         }
 
-        AuroraSurface {
+        ExtraComponents.AuroraSurface {
             anchors.fill: parent
             radius: 26
             color: root.cSurface

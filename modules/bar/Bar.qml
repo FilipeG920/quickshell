@@ -2,8 +2,8 @@ import Quickshell
 import QtQuick 6.10
 import QtQuick.Layouts 6.10
 import QtQuick.Effects
-import "components" as BarComponents
-import "../../components"
+import "components" as Components
+import "../../components" as ExtraComponents
 import "../../components/effects"
 import "../../config" as QsConfig
 import "../../services" as QsServices
@@ -63,7 +63,7 @@ Item {
         // ═══════════════════════════════════════════════════════════════
         // LEFT MODULE - Workspaces
         // ═══════════════════════════════════════════════════════════════
-        AuroraSurface {
+        ExtraComponents.AuroraSurface {
             id: leftModule
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
@@ -112,7 +112,7 @@ Item {
         // ═══════════════════════════════════════════════════════════════
         // CENTER MODULE - Clock (Focal Point)
         // ═══════════════════════════════════════════════════════════════
-        AuroraSurface {
+        ExtraComponents.AuroraSurface {
             id: centerModule
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
@@ -181,7 +181,7 @@ Item {
             spacing: 6
             
             // ═══ PILL 1: Network + Bluetooth (Connectivity) ═══
-            AuroraSurface {
+            ExtraComponents.AuroraSurface {
                 id: connectivityPill
                 height: 32
                 width: connectivityContent.implicitWidth + 18
@@ -262,7 +262,7 @@ Item {
             }
             
             // ═══ PILL 2: Brightness + Volume (Audio/Display) ═══
-            AuroraSurface {
+            ExtraComponents.AuroraSurface {
                 id: audioPill
                 height: 32
                 width: audioContent.implicitWidth + 18
@@ -327,7 +327,7 @@ Item {
             }
             
             // ═══ PILL 3: Battery + Control Center + Tray ═══
-            AuroraSurface {
+            ExtraComponents.AuroraSurface {
                 id: powerPill
                 height: 32
                 width: powerContent.implicitWidth + 18
@@ -457,7 +457,7 @@ Item {
         // ═══════════════════════════════════════════════════════════════
         // MEDIA MODULE - Always visible (shows "No media" when not playing)
         // ═══════════════════════════════════════════════════════════════
-        AuroraSurface {
+        ExtraComponents.AuroraSurface {
             id: mediaModule
             anchors.left: leftModule.right
             anchors.leftMargin: 8

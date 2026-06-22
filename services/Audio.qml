@@ -94,7 +94,7 @@ Singleton {
         setMuteProc.running = true
     }
 
-    function setSourceVolume(volume) {
+    function setSourceVolume(newVolume) {
         setSourceMute(false)
         setSourceVolProc.command = ["wpctl", "set-volume", "@DEFAULT_AUDIO_SOURCE@", Math.max(0, Math.min(1.5, newVolume)).toFixed(3)]
         setSourceVolProc.running = true

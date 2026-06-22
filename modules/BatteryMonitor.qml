@@ -60,12 +60,12 @@ Scope {
                 const lvl = sorted[i]
                 if (percentage <= lvl.level && !lvl.warned) {
                     lvl.warned = true
-                    root._notify(lvl.title, `${lvl.message} (${p}%)`)
+                    root._notify(lvl.title, `${lvl.message} (${percentage}%)`)
                 }
             }
 
             if (!criticalTimer.running && percentage <= criticalLevel && criticalAction !== "none") {
-                root._notify("Battery critical", `Running ${criticalAction} in ${Math.round(criticalActionDelayMs / 1000)}s (${p}%)`)
+                root._notify("Battery critical", `Running ${criticalAction} in ${Math.round(criticalActionDelayMs / 1000)}s (${percentage}%)`)
                 criticalTimer.start()
             }
         }

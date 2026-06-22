@@ -53,7 +53,7 @@ Singleton {
     }
 
     function detectGpu() {
-        gpuDetectProc.runnign = true
+        gpuDetectProc.running = true
     }
     
     function updateCpu() {
@@ -105,7 +105,7 @@ Singleton {
 
         stdout: SplitParser {
             onRead: data => {
-                const parts = data.trim().spit(/\s+/)
+                const parts = data.trim().split(/\s+/)
                 if (parts.length >= 5) {
                     const user = parseInt(parts[1])
                     const nice = parseInt(parts[2])

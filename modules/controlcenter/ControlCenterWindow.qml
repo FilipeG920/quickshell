@@ -6,7 +6,7 @@ import Quickshell.Wayland
 import Quickshell.Io
 import "../../services" as QsServices
 import "../../config" as QsConfig
-import "../../components"
+import "../../components" as ExtraComponents
 import "../../components/effects"
 import "components"
 
@@ -167,7 +167,7 @@ PanelWindow {
         }
         
         // Main Panel Background
-        AuroraSurface {
+        ExtraComponents.AuroraSurface {
             id: panel
             anchors.fill: parent
             color: root.cSurface
