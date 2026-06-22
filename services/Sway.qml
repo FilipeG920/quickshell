@@ -46,20 +46,23 @@ Singleton {
         target: I3
 
         function onRawEvent(event: var): void {
-            const n = event.name;
-            if (n.endsWith("v2"))
-                return;
+            const n = event?.name ?? ""
 
-            // More aggressive refresh for workspace changes
+            if (n.length === 0)
+                return
+
+            if (n.endsWith("v2"))
+                return
+
             if (["workspace", "moveworkspace", "activespecial", "focusedmon", "activewindow"].includes(n)) {
-                I3.refreshWorkspaces();
-                I3.refreshMonitors();
+                I3.refreshWorkspaces()
+                I3.refreshMonitors()
             } else if (["openwindow", "closewindow", "movewindow"].includes(n)) {
-                I3.refreshWorkspaces();
+                I3.refreshWorkspaces()
             } else if (n.includes("workspace")) {
-                I3.refreshWorkspaces();
+                I3.refreshWorkspaces()
             } else if (n.includes("window")) {
-                I3.refreshWorkspaces();
+                I3.refreshWorkspaces()
             }
         }
     }

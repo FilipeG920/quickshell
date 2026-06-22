@@ -17,8 +17,8 @@ Item {
     readonly property var pywal: QsServices.Pywal
     readonly property real percentage: battery?.percentage ?? 0
     readonly property int batteryLevel: Math.round(percentage * 100)
-    readonly property bool isCharging: battery?.state === UPowerDevice.Charging
-    readonly property bool isFullyCharged: battery?.state === UPowerDevice.FullyCharged
+    readonly property bool isCharging: battery?.state === UPowerDeviceState.Charging
+    readonly property bool isFullyCharged: battery?.state === UPowerDeviceState.FullyCharged
     readonly property bool isPluggedIn: isCharging || isFullyCharged
     readonly property bool isWarning: batteryLevel <= 25 && batteryLevel > 15
     readonly property bool isLow: batteryLevel <= 15
@@ -61,11 +61,30 @@ Item {
     
     readonly property color chargingColor: "#8FDEB4"
     readonly property color liquidColor: Qt.lighter("#8FDEB4", 1.2)
-    readonly property color compactBatteryColor: {
-        if (showExpandedMode || justPluggedIn) return chargingColor
-        if (isPluggedIn && (isLow || isWarning)) return normalColor
-        if (isPluggedIn) return chargingColor
-        return normalColor
+    function getNormalColor() {
+        if (isLow)
+        return pywal.error
+
+        if (isWarning)
+        return pywal.warning
+
+        if (batteryLevel >= 60)
+        return Qt.rgba(pywal.foreground.r, pywal.foreground.g, pywal.foreground.b, 0.7)
+
+        return Qt.rgba(pywal.foreground.r, pywal.foreground.g, pywal.foreground.b, 0.6)
+    }
+
+    function getCompactBatteryColor() {
+        if (showExpandedMode || justPluggedIn)
+        return chargingColor
+
+        if (isPluggedIn && (isLow || isWarning))
+        return getNormalColor()
+
+        if (isPluggedIn)
+        return chargingColor
+
+        return getNormalColor()
     }
     
     // Main container
@@ -113,7 +132,7 @@ Item {
                     radius: 3
                     color: "transparent"
                     border.width: 1.5
-                    border.color: compactBatteryColor
+                    border.color: root.getCompactBatteryColor()
                     
                     Behavior on border.color {
                         ColorAnimation { duration: 300 }
@@ -128,7 +147,7 @@ Item {
                         anchors.margins: 2.5
                         width: Math.max(0, (parent.width - 5) * root.percentage)
                         radius: 1.5
-                        color: compactBatteryColor
+                        color: root.getCompactBatteryColor()
                         
                         Behavior on width {
                             NumberAnimation { duration: 400; easing.type: Easing.OutCubic }
@@ -171,7 +190,7 @@ Item {
                     width: 3
                     height: 5
                     radius: 1.5
-                    color: compactBatteryColor
+                    color: root.getCompactBatteryColor()
                     
                     Behavior on color {
                         ColorAnimation { duration: 300 }
@@ -204,7 +223,7 @@ Item {
                 font.family: "Inter"
                 font.pixelSize: 11
                 font.weight: (isWarning || isLow) ? Font.Bold : Font.Medium
-                color: compactBatteryColor
+                color: root.getCompactBatteryColor()
                 
                 Behavior on color {
                     ColorAnimation { duration: 300 }

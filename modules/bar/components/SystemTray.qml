@@ -7,6 +7,8 @@ RowLayout {
     id: root
     spacing: 4
     
+    readonly property bool hasItems: SystemTray.items.length > 0
+
     Repeater {
         model: SystemTray.items
         

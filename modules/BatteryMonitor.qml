@@ -6,7 +6,7 @@ import QtQuick
 Scope {
     id: root
 
-    property list<var> warnLevels: [
+    property var warnLevels: [
         { level: 20, title: "Battery low", message: "Plug in soon", icon: "battery_alert", warned: false },
         { level: 10, title: "Battery very low", message: "Save your work", icon: "battery_alert", warned: false },
         { level: 5, title: "Battery critical", message: "Plug in now", icon: "battery_alert", warned: false }
