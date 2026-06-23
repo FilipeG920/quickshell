@@ -5,7 +5,7 @@
   },
   "paths": {
     "pywalColors": "~/.cache/wal/colors.json",
-    "screenshotsDir": "~/Pictures/Screenshots"
+    "screenshotsDir": "~/Imagens/Screenshots"
   },
   "osd": {
     "volumeTimeoutMs": 2000,
@@ -23,7 +23,7 @@
     "enabled": true,
     "width": 720,
     "maxResults": 8,
-    "terminalCommand": ["foot"],
+    "terminalCommand": ["kitty"],
     "favorites": [
       "firefox",
       "zen-browser",

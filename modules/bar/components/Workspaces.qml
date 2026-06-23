@@ -13,8 +13,8 @@ Item {
     readonly property var config: QsConfig.Config
     readonly property var pywal: QsServices.Pywal
     readonly property var sway: QsServices.Sway
-    readonly property int activeWsId: sway.activeWsId
-    readonly property var occupied: sway.getOccupiedWorkspaces()
+    readonly property int activeWsNumber: sway.activeWsNumber
+    readonly property var occupied: sway.occupiedWorkspaces
     
     implicitWidth: layout.implicitWidth
     implicitHeight: config.bar.height - config.bar.padding * 2
@@ -37,10 +37,10 @@ Item {
                 
                 onLoaded: {
                     item.workspaceId = index + 1
-                    item.isActive = Qt.binding(() => root.activeWsId === (index + 1))
+                    item.isActive = Qt.binding(() => root.activeWsNumber === (index + 1))
                     item.isOccupied = Qt.binding(() => root.occupied[index + 1] ?? false)
                     item.clicked.connect(function() {
-                        if (root.sway.activeWsId !== item.workspaceId) {
+                        if (root.sway.activeWsNumber !== item.workspaceId) {
                             root.sway.dispatch(`workspace ${item.workspaceId}`)
                         }
                     })

@@ -13,7 +13,9 @@ Singleton {
     readonly property var focusedMonitor: I3.focusedMonitor
     readonly property var focusedWorkspace: I3.focusedWorkspace
 
-    readonly property int activeWsId: focusedWorkspace?.id ?? 1
+    readonly property int activeWsNumber: focusedWorkspace?.number ?? focusedWorkspace?.lastIpcObject?.num ?? 1
+
+    property var occupiedWorkspaces: ({})
 
     function dispatch(request: string): void {
         I3.dispatch(request);
@@ -24,12 +26,21 @@ Singleton {
     }
 
     // Get occupied workspaces (workspaces with windows)
-    function getOccupiedWorkspaces(): var {
+    function updateOccupiedWorkspaces(): var {
         const occupied = {};
         for (const ws of workspaces.values) {
-            occupied[ws.id] = (ws.lastIpcObject?.windows ?? 0) > 0;
+            const num = ws.number ?? ws.lastIpcObject?.num;
+            const repr = ws.lastIpcObject?.representation ?? "";
+            if (num !== undefined && num !== null) {
+                occupied[num] = repr.length > 0;
+            }
         }
-        return occupied;
+        occupiedWorkspaces = occupied;
+    }
+
+    function refreshWorkspaceState(): void {
+        I3.refreshWorkspaces();
+        updateOccupiedWorkspaces();
     }
 
     // Refresh timer to ensure updates when events are missed
@@ -38,7 +49,7 @@ Singleton {
         running: true
         repeat: true
         onTriggered: {
-            I3.refreshWorkspaces();
+            refreshWorkspaceState();
         }
     }
 
@@ -55,15 +66,19 @@ Singleton {
                 return
 
             if (["workspace", "moveworkspace", "activespecial", "focusedmon", "activewindow"].includes(n)) {
-                I3.refreshWorkspaces()
+                refreshWorkspaceState()
                 I3.refreshMonitors()
             } else if (["openwindow", "closewindow", "movewindow"].includes(n)) {
-                I3.refreshWorkspaces()
+                refreshWorkspaceState()
             } else if (n.includes("workspace")) {
-                I3.refreshWorkspaces()
+                refreshWorkspaceState()
             } else if (n.includes("window")) {
-                I3.refreshWorkspaces()
+                refreshWorkspaceState()
             }
         }
+    }
+
+    Component.onCompleted: {
+        refreshWorkspaceState()
     }
 }
